@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+		  <meta charset="utf-8">
+		  <title>D3 Dashboard 2</title>
+
+		  <link rel="stylesheet"> 
+		  <script src="d3/d3.min.js"></script>
+		  <script src="Dimple/dist/dimple.v2.1.2.min.js"></script>
+		  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		  <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+		<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css" />
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	
+		  
+	<style>
+
+
+				rect:hover {
+			        fill: orange;
+			}
+
+			body {
+			  
+			   font-family: "Helvetica Neue", Helvetica, sans-serif;
+
+			}
+
+			#body {
+			  position: relative;
+			}
+
+			h1 {
+
+			  font-size: 64px;
+			  font-weight: 300;
+			  letter-spacing: -2px;
+			  margin: .4em 0 .1em 0;
+			}
+
+	
+			h6 { 
+				display: block;
+				font-size: 1.6em;
+				font-family: Century Gothic;
+				letter-spacing: -0px;
+				margin-top: 1.25em;
+				margin-bottom: .25em;
+				margin-left: 0;
+				margin-right: 0;
+				font-weight: 700;
+			}
+			
+ 
+			text.dimple-tooltip {
+			  font-family: Arial !important;
+			  font-size: 12px !important;
+			}
+
+body{
+    width:1060px;
+    margin:50px auto;
+}
+
+path:hover {  opacity:0.7; }
+
+
+
+.axis {  font: 12px sans-serif; 
+font-weight: bold;
+
+}
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  stroke-width:2;
+  shape-rendering: crispEdges;
+}
+
+
+.legend{
+    margin-bottom:76px;
+    display:inline-block;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+.legend td{
+    padding:4px 5px;
+    vertical-align:bottom;
+}
+.legendFreq, .legendPerc{
+    align:right;
+    width:100px;
+}
+
+ body {
+        font: 12px sans-serif;
+        color: #121401;
+      }
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: #121401;
+        stroke-width: 2px;
+        shape-rendering: crispEdges;
+      }
+      .point {
+        stroke: black;
+        stroke-width: 3px;
+        opacity: 0;
+      }
+      .point:hover{
+        opacity: 0;
+      }
+
+
+
+	</style>
+		</head>
+		
+
+  <body>
+  
+  <div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h1>
+				D3 Dashboard
+			</h1>
+			<h3>KPI Dashboard **demo only scrubbed data</font></h3>
+			<hr>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<h6>
+				<p>Simple Bar Graph<div id="chartContainer1"></div></p><br>
+			</h6>
+		</div>
+		<div class="col-md-6 column">
+			<h6>
+				<p>Dual Axis Bar Graph<div id="chartContainer2"></div></p><br>
+			</h6>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h6>
+				<p>Interactive Dashboard<div id="dashboard"></div></p><br>
+			</h6>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h6>
+				<p>Area Graph<div id="chartContainer3"></div></p><br>
+			</h6>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<h6>
+				<p>Stacked Bar Graph<div id="chartContainer4"></div></p><br>
+			</h6>
+		</div>
+		<div class="col-md-6 column">
+			<h6>
+				<p>Grouped Series Bar Graph<div id="chartContainer5"></div></p><br>
+			</h6>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h6>
+				<p>Streamgraph<div id="chartContainer6"></div></p><br>
+			</h6>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<h6>
+				<iframe width='100%' height='520' frameborder='0' src='http://timothymartin76.cartodb.com/viz/f95dfcd4-b7b6-11e4-9431-0e018d66dc29/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+			</h6>
+		</div>
+		<div class="col-md-6 column">
+			<h6>
+				<iframe width='100%' height='520' frameborder='0' src='http://timothymartin76.cartodb.com/viz/90c596fc-b7a0-11e4-9f2b-0e4fddd5de28/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+			</h6>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<h6>
+				<p>Add Info to Tooltip<div id="chartContainer7"></div></p><br>
+			</h6>
+		</div>
+		<div class="col-md-6 column">
+			<h6>
+				<p>Stacked Bar Graph<div id="chartContainer8"></div></p><br>
+			</h6>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<h6>
+				<p>Table 1<div id="chartContainer9"></div></p><br>
+			</h6>
+		</div>
+		<div class="col-md-6 column">
+			<h6>
+				<p>Table 2<div id="chartContainer10"></div></p><br>
+			</h6>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<h6>
+				<p>Horizontal Bar 1<div id="chartContainer11"></div></p><br>
+			</h6>
+		</div>
+		<div class="col-md-6 column">
+			<h6>
+				<p>Horizontal Bar 2<div id="chartContainer12"></div></p><br>
+			</h6>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<h6>
+				<p>Line Graph Multi Series<div id="chartContainer13"></div></p><br>
+			</h6>
+		</div>
+		<div class="col-md-6 column">
+			<h6>
+				<p>Pie Graph Time Series<div id="chartContainer14"></div></p><br>
+			</h6>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+
+var svg1 = dimple.newSvg("#chartContainer1", 690, 310);
+		d3.csv("Data1.csv", function (data) {
+          var myChart = new dimple.chart(svg1, data);
+          myChart.setBounds(100, 28, 400, 250)
+          var x = myChart.addCategoryAxis("x", "Month");
+          x.addOrderRule(["Sep-14", "Oct-14", "Nov-14", "Dec-14", "Jan-15", "Feb-15"]);
+          var y = myChart.addMeasureAxis("y", "Volume");
+          y.showGridlines = false;
+          var s = myChart.addSeries(["% Change", ""], dimple.plot.bar);
+          myChart.defaultColors = [
+			new dimple.color("#2185C5"),
+			new dimple.color("#FF6347"), 
+			new dimple.color("#8BB532"), 
+			new dimple.color("#5788E8"), 
+			new dimple.color("#7A9B32"), 
+]; 
+          myChart.draw();
+
+			s.shapes.each(function(d) {
+            var shape = d3.select(this);          
+            svg1.append("text")    
+            .attr("x", parseFloat(shape.attr("x")) + parseFloat(shape.attr("width"))/2)
+            .attr("y", y._scale(d.height))
+            .attr("dy", "-1em")      
+            .style("text-anchor", "middle")
+            .style("font-size", "11px")
+            .style("font-family", "sans-serif") 
+            .style("font-weight", "600")         
+            .text(d3.format(",")(d.yValue));
+        });     
+		
+		    });
+			
+		
+			 var svg2 = dimple.newSvg("#chartContainer2", 690, 310);
+        d3.csv("Data2.csv", function (data) {
+          var myChart = new dimple.chart(svg2, data);
+          myChart.setBounds(60, 28, 400, 250)
+          myChart.defaultColors = [
+			new dimple.color("#3E454C"),
+			new dimple.color("#FF7F66"), 
+			new dimple.color("#8BB532"), 
+			new dimple.color("#5788E8"), 
+			new dimple.color("#7A9B32"), 
+]; 
+          var x = myChart.addCategoryAxis("x", "Date");
+          x.addOrderRule("Date");
+          var y1 = myChart.addMeasureAxis("y", "Value");
+          y1.showGridlines = false;
+		  var y2 = myChart.addMeasureAxis("y", "Percent");
+		  y2.showGridlines = false;
+          var s1 = myChart.addSeries("Total Value", dimple.plot.bar, [x, y1]);
+		  var s2 = myChart.addSeries("Time Series", dimple.plot.line, [x, y2]);
+		  s2.lineWeight = 4;   
+          var myLegend = myChart.addLegend(60, 10, 400, 20, "right");
+          myChart.draw();
+
+
+    });
+	
+	
+	function dashboard(id, fData){
+    var barColor = '#2185C5';
+    function segColor(c){ return {Section_1:"#3E454C", Section_2:"#7ECEFD",Section_3:"#BFB8AC",Section_4:"#FF7F66"}[c]; }
+
+    // compute total for each Month.
+    fData.forEach(function(d){d.total=d.freq.Section_1+d.freq.Section_2+d.freq.Section_3+d.freq.Section_4;});
+    
+    // function to handle histogram.
+    function histoGram(fD){
+        var hG={},    hGDim = {t: 60, r: 0, b: 20, l: 60};
+        hGDim.w = 500 - hGDim.l - hGDim.r, 
+        hGDim.h = 300 - hGDim.t - hGDim.b;
+            
+        //create svg for histogram.
+        var hGsvg = d3.select(id).append("svg")
+            .attr("width", hGDim.w + hGDim.l + hGDim.r)
+            .attr("height", hGDim.h + hGDim.t + hGDim.b).append("g")
+            .attr("transform", "translate(" + hGDim.l + "," + hGDim.t + ")");
+
+        // create function for x-axis mapping.
+        var x = d3.scale.ordinal().rangeRoundBands([0, hGDim.w], 0.15)
+                .domain(fD.map(function(d) { return d[0]; }));
+
+        // Add x-axis to the histogram svg.
+        hGsvg.append("g").attr("class", "x axis")
+            .attr("transform", "translate(0," + hGDim.h + ")")
+            .call(d3.svg.axis().scale(x).orient("bottom"));
+			
+			
+
+        // Create function for y-axis map.
+        var y = d3.scale.linear().range([hGDim.h, 0])
+                .domain([0, d3.max(fD, function(d) { return d[1]; })]);
+				
+
+        // Create bars for histogram to contain rectangles and freq labels.
+        var bars = hGsvg.selectAll(".bar").data(fD).enter()
+                .append("g").attr("class", "bar");
+        
+        //create the rectangles.
+        bars.append("rect")
+            .attr("x", function(d) { return x(d[0]); })
+            .attr("y", function(d) { return y(d[1]); })
+            .attr("width", x.rangeBand())
+            .attr("height", function(d) { return hGDim.h - y(d[1]); })
+            .attr('fill',barColor)
+			.style("opacity", .85)
+            .on("mouseover",mouseover)// mouseover is defined below.
+            .on("mouseout",mouseout);// mouseout is defined below.
+
+          
+        //Create the frequency labels above the rectangles.
+        bars.append("text").text(function(d){ return d3.format(",f")(d[1]/1000)+"k"})  
+            .attr("x", function(d) { return x(d[0])+x.rangeBand()/2; })
+            .attr("y", function(d) { return y(d[1])-5; })
+            .attr("text-anchor", "middle")
+			.style("font-weight", "600")      
+			.style("font-family", "sans-serif")
+			.style("font-size", "12px");
+
+
+		bars.append("text")
+            .attr("transform", "rotate(-90)")
+            .style("text-anchor", "end" )
+            .style("font-family", "sans-serif")
+            .style("font-weight", "500")   
+			.style("font-size", "12px")
+            .text("Total Volume");
+
+			
+        
+        function mouseover(d){  // utility function to be called on mouseover.
+            // filter for selected Month.
+            var st = fData.filter(function(s){ return s.Month == d[0];})[0],
+                nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
+               
+            // call update functions of pie-chart and legend.    
+            pC.update(nD);
+            leg.update(nD);
+        }
+        
+        function mouseout(d){    // utility function to be called on mouseout.
+            // reset the pie-chart and legend.    
+            pC.update(tF);
+            leg.update(tF);
+        }
+        
+        // create function to update the bars. This will be used by pie-chart.
+        hG.update = function(nD, color){
+            // update the domain of the y-axis map to reflect change in frequencies.
+            y.domain([0, d3.max(nD, function(d) { return d[1]; })]);
+            
+            // Attach the new data to the bars.
+            var bars = hGsvg.selectAll(".bar").data(nD);
+            
+            // transition the height and color of rectangles.
+            bars.select("rect").transition().duration(500)
+                .attr("y", function(d) {return y(d[1]); })
+                .attr("height", function(d) { return hGDim.h - y(d[1]); })
+                .attr("fill", color)
+				.style("opacity", .85);
+
+            // transition the frequency labels location and change value.
+            bars.select("text").transition().duration(500)
+                .text(function(d){ return d3.format(",f")(d[1]/1000)+"k"})   
+                .attr("y", function(d) {return y(d[1])-5; });            
+        }        
+        return hG;
+    }
+    
+    // function to handle pieChart.
+    function pieChart(pD){
+        var pC ={},    pieDim ={w:250, h: 250};
+        pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
+                
+        // create svg for pie chart.
+        var piesvg = d3.select(id).append("svg")
+            .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
+            .attr("transform", "translate("+pieDim.w/2+","+pieDim.h/2+")");
+        
+        // create function to draw the arcs of the pie slices.
+        var arc = d3.svg.arc().outerRadius(pieDim.r - 10).innerRadius(0);
+
+        // create a function to compute the pie slice angles.
+        var pie = d3.layout.pie().sort(null).value(function(d) { return d.freq; });
+
+        // Draw the pie slices.
+        piesvg.selectAll("path").data(pie(pD)).enter().append("path").attr("d", arc)
+            .each(function(d) { this._current = d; })
+            .style("fill", function(d) { return segColor(d.data.type); })
+            .on("mouseover",mouseover).on("mouseout",mouseout)
+			.style("stroke", "#fff") 
+			.style("opacity", .85);
+
+        // create function to update pie-chart. This will be used by histogram.
+        pC.update = function(nD){
+            piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
+                .attrTween("d", arcTween);
+        }        
+        // Utility function to be called on mouseover a pie slice.
+        function mouseover(d){
+            // call the update function of histogram with new data.
+            hG.update(fData.map(function(v){ 
+                return [v.Month,v.freq[d.data.type]];}),segColor(d.data.type));
+        }
+        //Utility function to be called on mouseout a pie slice.
+        function mouseout(d){
+            // call the update function of histogram with all data.
+            hG.update(fData.map(function(v){
+                return [v.Month,v.total];}), barColor);
+        }
+        // Animating the pie-slice requiring a custom function which specifies
+        // how the intermediate paths should be drawn.
+        function arcTween(a) {
+            var i = d3.interpolate(this._current, a);
+            this._current = i(0);
+            return function(t) { return arc(i(t));    };
+        }    
+        return pC;
+    }
+    
+    // function to handle legend.
+    function legend(lD){
+        var leg = {};
+            
+        // create table for legend.
+        var legend = d3.select(id).append("table").attr('class','legend');
+        
+        // create one row per segment.
+        var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
+            
+        // create the first column for each segment.
+        tr.append("td").append("svg").attr("width", '10').attr("height", '10').append("rect")
+            .attr("width", '10').attr("height", '10')
+			.attr("fill",function(d){ return segColor(d.type); });
+            
+        // create the second column for each segment.
+        tr.append("td").text(function(d){ return d.type;})
+		.style("font-weight", "700")      
+		.style("font-size", "14px")
+			.style("font-family", "sans-serif");
+
+
+
+        // create the third column for each segment.
+        tr.append("td").attr("class",'legendFreq')
+            .text(function(d){ return d3.format(",")(d.freq);})
+			.style("font-weight", "700")      
+			.style("font-size", "14px")
+			.style("font-family", "sans-serif");
+
+        // create the fourth column for each segment.
+        tr.append("td").attr("class",'legendPerc')
+            .text(function(d){ return getLegend(d,lD);})
+			.style("font-weight", "700")      
+			.style("font-size", "14px")
+			.style("font-family", "sans-serif");
+
+        // Utility function to be used to update the legend.
+        leg.update = function(nD){
+            // update the data attached to the row elements.
+            var l = legend.select("tbody").selectAll("tr").data(nD);
+
+            // update the frequencies.
+            l.select(".legendFreq").text(function(d){ return d3.format(",")(d.freq);});
+
+            // update the percentage column.
+            l.select(".legendPerc").text(function(d){ return getLegend(d,nD);});        
+        }
+        
+        function getLegend(d,aD){ // Utility function to compute percentage.
+            return d3.format("%")(d.freq/d3.sum(aD.map(function(v){ return v.freq; })));
+        }
+
+        return leg;
+    }
+    
+    // calculate total frequency by segment for all Month.
+    var tF = ['Section_1','Section_2','Section_3', 'Section_4'].map(function(d){ 
+        return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
+    });    
+    
+    // calculate total frequency by Month for all segment.
+    var sF = fData.map(function(d){return [d.Month,d.total];});
+
+    var hG = histoGram(sF), // create the histogram.
+        pC = pieChart(tF), // create the pie-chart.
+        leg= legend(tF);  // create the legend.
+}
+
+var freqData=[
+
+{Month:'Aug-14',freq:{Section_1:150000, Section_2:40000, Section_3:25000, Section_4:12000}}
+,{Month:'Sep-14',freq:{Section_1:180000, Section_2:60000, Section_3:20000, Section_4:26000}}
+,{Month:'Oct-14',freq:{Section_1:199000, Section_2:55000, Section_3:30000, Section_4:35000}}
+,{Month:'Nov-14',freq:{Section_1:250000, Section_2:75000, Section_3:20000, Section_4:26000}}
+,{Month:'Dec-14',freq:{Section_1:300000, Section_2:100000, Section_3:30000, Section_4:15000}}
+,{Month:'Jan-15',freq:{Section_1:225000, Section_2:85000, Section_3:25000, Section_4:60000}}
+,{Month:'Feb-15',freq:{Section_1:118000, Section_2:50000, Section_3:60000, Section_4:80000}}
+];
+
+dashboard('#dashboard',freqData);
+
+	
+	var svg3 = dimple.newSvg("#chartContainer3", 1050, 410);
+		d3.csv("Data3.csv", function (data) {
+		  var myChart = new dimple.chart(svg3, data);
+		  myChart.defaultColors = [
+			new dimple.color("#3E454C"),
+			new dimple.color("#2185C5"), 
+			new dimple.color("#7ECEFD"), 
+			new dimple.color("#FFF6E5"), 
+			new dimple.color("#FF7F66"), 
+		
+]; 
+		  myChart.setBounds(90, 10, 950, 300);
+		  var x = myChart.addCategoryAxis("x", "Date");
+		  x.addOrderRule("Date");
+		  var y = myChart.addMeasureAxis("y", "Volume");
+		   y.showGridlines = false;
+			  y.tickFormat = ',5g';
+		  var s = myChart.addSeries("Category", dimple.plot.area);
+		  s.interpolation = "cardinal";
+		  s.interpolation = "cardinal";
+		  var myLegend = myChart.addLegend(100, 50, 600, 300, "left");		  
+		  myLegend._getEntries = function () {
+    var orderedValues = ["Category A", "Category B", "Category C", "Category D", "Category E"];
+    var entries = [];
+    orderedValues.forEach(function (v) {
+        entries.push(
+        {
+                key: v,
+                fill: myChart.getColor(v).fill,
+                stroke: myChart.getColor(v).stroke,
+                opacity: myChart.getColor(v).opacity,
+                series: s,
+                aggField: [v]
+            }
+        );
+    }, this);
+  
+    return entries;
+};
+		  		  
+		  myChart.draw();
+	
+    });
+	
+	
+	
+	var svg4 = dimple.newSvg("#chartContainer4", 690, 280);
+      d3.csv("Data4.csv", function (data) {
+        var myChart = new dimple.chart(svg4, data);
+      myChart.defaultColors = [
+			new dimple.color("#3E454C"),
+			new dimple.color("#2185C5"), 
+			new dimple.color("#FF7F66"), 
+			new dimple.color("#5788E8"), 
+			new dimple.color("#7A9B32"), 
+]; 
+		myChart.setBounds(100, 10, 400, 250);
+         var x = myChart.addCategoryAxis("x", "Month");
+           x.addOrderRule(["Oct-14", "Nov-14", "Dec-14", "Jan-15", "Feb-15"]);
+          var y = myChart.addMeasureAxis("y", "Volume");
+          y.showGridlines = false;
+          y.tickFormat = ',4g';
+          var s = myChart.addSeries("Category", dimple.plot.bar);
+		  
+      s.afterDraw = function (shape, data) {
+        var s = d3.select(shape),
+          rect = {
+            x: parseFloat(s.attr("x")),
+            y: parseFloat(s.attr("y")),
+            width: parseFloat(s.attr("width")),
+            height: parseFloat(s.attr("height"))
+          };
+       
+        if (rect.height >= 1) {
+         
+          svg4.append("text")
+            .attr("x", rect.x + rect.width / 2)
+            .attr("y", rect.y + rect.height / 2 + 3.5)
+            .style("text-anchor", "middle")
+            .style("font-size", "11px")
+            .style("font-family", "sans-serif")
+			.style("opacity", 0.8)
+            .style("font-weight", "600")  
+            .text(d3.format(".1f")(data.yValue / 1000) + "k");
+        }
+      };
+      
+          var myLegend = myChart.addLegend(120, 20, 120, 300, "left");
+          myChart.draw();
+		  
+		  
+		  
+		   // Iterate every value on the x axis
+x.shapes.selectAll("text").each(function (d) {
+    
+    // There is a dummy empty string value on the end which we want to ignore
+    if (d && d.length) {
+        
+        // Get the total y value
+        var total = d3.sum(data, function (t) { return (t.Month === d ? t.Volume : 0); });
+        // Add the text for the label
+        var label = svg4.append("text");
+        
+        // Set the x position
+        // x._scale(d) is the tick position of each element
+        // (myChart._widthPixels() / x._max) / 2 is half of the space allocated to each element
+        label.attr("x", x._scale(d) + (myChart._widthPixels() / x._max) / 2)
+        
+        // Vertically center the text on the point
+        label.attr("dy", "0.35em")
+        
+        // Style the text - this can be better done with label.attr("class", "my-label-class")
+        label.style("text-anchor", "middle")
+            .style("font-size", "11px")
+            .style("font-family", "sans-serif")
+            .style("opacity", 0.8)
+        
+        // Set the text itself in thousands
+        label.text(d3.format(".1f")(total / 1000) + "k");
+        
+        // Once the style and the text is set we can set the y position
+        // y._scale(total) gives the y position of the total (and therefore the top of the top segment)
+        // label.node().getBBox().height gives the height of the text to leave a gap above the bar
+        label.attr("y", y._scale(total) - label.node().getBBox().height)
+    }
+   }); 		       
+
+    });
+	
+	
+	
+	var svg5 = dimple.newSvg("#chartContainer5", 690, 280);
+        d3.csv("Data5.csv", function (data) {
+          var myChart = new dimple.chart(svg5, data);
+          myChart.defaultColors = [
+			new dimple.color("#3E454C"),
+			new dimple.color("#2185C5"), 
+			new dimple.color("#FF7F66"), 
+			
+]; 
+
+          myChart.setBounds(60, 10, 400, 250)
+          var x = myChart.addCategoryAxis("x", ["Date", "Channel"]);   
+          var y = myChart.addMeasureAxis("y", "Volume"); 
+          y.showGridlines = false;
+          
+          var s = myChart.addSeries("Channel", dimple.plot.bar);  
+          var myLegend = myChart.addLegend(80, 20, 120, 300, "left");
+		  
+		   myLegend._getEntries = function () {
+    var orderedValues = ["Channel 1", "Channel 2", "Channel 3"];
+    var entries = [];
+    orderedValues.forEach(function (v) {
+        entries.push(
+        {
+                key: v,
+                fill: myChart.getColor(v).fill,
+                stroke: myChart.getColor(v).stroke,
+                opacity: myChart.getColor(v).opacity,
+                series: s,
+                aggField: [v]
+            }
+        );
+    }, this);
+  
+    return entries;
+};
+		  	  
+          myChart.draw();
+        
+       
+    });
+	
+	
+				 var margin = {top: 20, right: 55, bottom: 30, left: 80},
+          width  = 1000 - margin.left - margin.right,
+          height = 350  - margin.top  - margin.bottom;
+
+      var x = d3.scale.ordinal()
+          .rangeRoundBands([0, width], .1);
+
+      var y = d3.scale.linear()
+          .rangeRound([height, 0]);
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
+
+      var stack = d3.layout.stack()
+          .offset("wiggle")
+          .values(function (d) { return d.values; })
+          .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
+          .y(function (d) { return d.value; });
+
+      var area = d3.svg.area()
+          .interpolate("cardinal")
+          .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
+          .y0(function (d) { return y(d.y0); })
+          .y1(function (d) { return y(d.y0 + d.y); });
+
+      var color = d3.scale.ordinal()
+		.range(["#FF7F66", "#BFB8AC" , "#7ECEFD", "#2185C5", "#3E454C"]);
+          
+
+      var svg = d3.select("#chartContainer6").append("svg")
+          .attr("width",  width  + margin.left + margin.right)
+          .attr("height", height + margin.top  + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      d3.csv("Data6.csv", function (error, data) {
+
+        var labelVar = 'Date';
+        var varNames = d3.keys(data[0])
+            .filter(function (key) { return key !== labelVar;});
+        color.domain(varNames);
+
+        var seriesArr = [], series = {};
+        varNames.forEach(function (name) {
+          series[name] = {name: name, values:[]};
+          seriesArr.push(series[name]);
+        });
+
+        data.forEach(function (d) {
+          varNames.map(function (name) {
+            series[name].values.push({name: name, label: d[labelVar], value: +d[name]});
+          });
+        });
+
+        x.domain(data.map(function (d) { return d.Date; }));
+
+        stack(seriesArr);
+
+        y.domain([0, d3.max(seriesArr, function (c) { 
+            return d3.max(c.values, function (d) { return d.y0 + d.y; });
+          })]);
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+          .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Total Volume");
+
+        var selection = svg.selectAll(".series")
+          .data(seriesArr)
+          .enter().append("g")
+            .attr("class", "series");
+
+        selection.append("path")
+          .attr("class", "streamPath")
+          .attr("d", function (d) { return area(d.values); })
+          .style("fill", function (d) { return color(d.name); })
+          .style("stroke", "grey");
+
+        var points = svg.selectAll(".seriesPoints")
+          .data(seriesArr)
+          .enter().append("g")
+            .attr("class", "seriesPoints");
+
+        points.selectAll(".point")
+          .data(function (d) { return d.values; })
+          .enter().append("circle")
+           .attr("class", "point")
+           .attr("cx", function (d) { return x(d.label) + x.rangeBand() / 2; })
+           .attr("cy", function (d) { return y(d.y0 + d.y); })
+           .attr("r", "10px")
+           .style("fill",function (d) { return color(d.name); })
+           .on("mouseover", function (d) { showPopover.call(this, d); })
+           .on("mouseout",  function (d) { removePopovers(); })
+
+        var legend = svg.selectAll(".legend")
+            .data(varNames.slice().reverse())
+          .enter().append("g")
+            .attr("class", "legend")
+            .attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
+
+        legend.append("rect")
+            .attr("x", width - 10)
+            .attr("width", 10)
+            .attr("height", 10)
+            .style("fill", color)
+            .style("stroke", "grey");
+
+        legend.append("text")
+            .attr("x", width - 12)
+            .attr("y", 6)
+            .attr("dy", ".35em")
+            .style("text-anchor", "end")	
+			.style("font-size","11px")
+            .text(function (d) { return d; });
+
+        function removePopovers () {
+          $('.popover').each(function() {
+            $(this).remove();
+          }); 
+        }
+
+      });
+	
+	
+	
+	var svg7 = dimple.newSvg("#chartContainer7", 690, 280);
+			d3.csv("Data7.csv", function (data) {
+			var myChart = new dimple.chart(svg7, data);
+			myChart.defaultColors = [
+			new dimple.color("#2185C5"),
+   
+]; 
+
+          myChart.setBounds(100, 10, 400, 220);
+          var x = myChart.addCategoryAxis("x", "Month");
+           x.addOrderRule(["Oct-14", "Nov-14", "Dec-14", "Jan-15", "Feb-15"]);
+          var y = myChart.addMeasureAxis("y", "Volume");
+		  y.showGridlines = false;
+          y.tickFormat = ',4g';      
+		  var s = myChart.addSeries(["Duration (mins)", "Delay (secs)"], dimple.plot.bar);	    
+		  myChart.draw();
+		
+
+        s.shapes.each(function(d) {
+            var shape = d3.select(this);
+            svg7.append("text")
+            .attr("x", parseFloat(shape.attr("x")) + parseFloat(shape.attr("width"))/2)
+            .attr("y", y._scale(d.height))
+            .attr("dy", "-1em")
+            .style("text-anchor", "middle")
+            .style("font-size", "11px")
+            .style("font-family", "sans-serif")
+            .style("font-weight", "600")  
+            .text(d3.format(",1f")(d.yValue));
+        });     
+
+
+        });
+	
+	
+	var svg8 = dimple.newSvg("#chartContainer8", 690, 280);
+			d3.csv("Data8.csv", function (data) {
+			var myChart = new dimple.chart(svg8, data);
+			myChart.defaultColors = [
+			new dimple.color("#3E454C"),
+			new dimple.color("#2185C5"), 
+			new dimple.color("#FF7F66"), 
+			new dimple.color("#7ECEFD"),
+			new dimple.color("#042037"), 
+		]; 
+
+          myChart.setBounds(70, 10, 400, 220)
+          var x = myChart.addCategoryAxis("x", "Month");
+          x.addOrderRule(["Sep-14", "Oct-14", "Nov-14", "Dec-14", "Jan-15"]);
+          var y = myChart.addMeasureAxis("y", "Volume");
+		  y.overrideMin = 0;
+		  y.overrideMax = 200000;
+          y.showGridlines = false;
+          y.tickFormat = ',6f';	  
+		  var s = myChart.addSeries("Metric", dimple.plot.bar);
+		  
+          var myLegend = myChart.addLegend(80, 10, 120, 300, "left");
+          myChart.draw();
+		  
+		  
+		   // Iterate every value on the x axis
+x.shapes.selectAll("text").each(function (d) {
+    
+    // There is a dummy empty string value on the end which we want to ignore
+    if (d && d.length) {
+        
+        // Get the total y value
+        var total = d3.sum(data, function (t) { return (t.Month === d ? t.Volume : 0); });
+        // Add the text for the label
+        var label = svg8.append("text");
+        
+        // Set the x position
+        // x._scale(d) is the tick position of each element
+        // (myChart._widthPixels() / x._max) / 2 is half of the space allocated to each element
+        label.attr("x", x._scale(d) + (myChart._widthPixels() / x._max) / 2)
+        
+        // Vertically center the text on the point
+        label.attr("dy", "0.35em")
+        
+        // Style the text - this can be better done with label.attr("class", "my-label-class")
+        label.style("text-anchor", "middle")
+            .style("font-size", "11px")
+            .style("font-family", "sans-serif")
+            .style("opacity", 0.8)
+        
+        // Set the text itself in thousands
+        label.text(d3.format(",f")(total / 1000) + "k");
+        
+        // Once the style and the text is set we can set the y position
+        // y._scale(total) gives the y position of the total (and therefore the top of the top segment)
+        // label.node().getBBox().height gives the height of the text to leave a gap above the bar
+        label.attr("y", y._scale(total) - label.node().getBBox().height)
+    }
+   }); 
+		  
+	
+      
+    });
+	
+	
+	
+	d3.text("Data9.csv", function(datasetText) {
+
+var parsedCSV = d3.csv.parseRows(datasetText);
+
+var sampleHTML = d3.select("#chartContainer9")
+    .append("table")
+    .style("border-collapse", "collapse")
+    .style("border", "2px black solid")
+
+    .selectAll("tr")
+    .data(parsedCSV)
+    .enter().append("tr")
+
+    .selectAll("td")
+    .data(function(d){return d;})
+    .enter().append("td")
+    .style("border", "1px black solid")
+    .style("padding", "3px")
+    .on("mouseover", function(){d3.select(this).style("background-color", "orange")})
+    .on("mouseout", function(){d3.select(this).style("background-color", "white")})
+    .text(function(d){return d;})
+    .style("font-size", "14px");
+});
+ 
+ 
+ 
+ 
+  d3.text("Data10.csv", function(datasetText) {
+
+var parsedCSV = d3.csv.parseRows(datasetText);
+
+var sampleHTML = d3.select("#chartContainer10")
+    .append("table")
+    .style("border-collapse", "collapse")
+    .style("border", "2px black solid")
+
+    .selectAll("tr")
+    .data(parsedCSV)
+    .enter().append("tr")
+
+    .selectAll("td")
+    .data(function(d){return d;})
+    .enter().append("td")
+    .style("border", "1px black solid")
+    .style("padding", "3px")
+    .on("mouseover", function(){d3.select(this).style("background-color", "orange")})
+    .on("mouseout", function(){d3.select(this).style("background-color", "white")})
+    .text(function(d){return d;})
+    .style("font-size", "14px");
+});
+	
+	
+	var svg11 = dimple.newSvg("#chartContainer11", 550, 380); 
+		d3.csv("Data11.csv", function (data) { 
+		var myChart = new dimple.chart(svg11, data); 
+		myChart.defaultColors = [
+			new dimple.color("#3E454C"),
+			new dimple.color("#FF6347"), 
+			new dimple.color("#8BB532"), 
+			new dimple.color("#5788E8"), 
+			new dimple.color("#7A9B32"), 
+]; 
+
+		myChart.setBounds(100, 30, 350, 305) 
+		var x = myChart.addMeasureAxis("x", "Volume"); 
+		x.overrideMin = 0;
+		x.overrideMax = 40000; 
+        x.showGridlines = false;
+		var y = myChart.addCategoryAxis("y", "Complaint"); 
+		y.addOrderRule(function(n){ 
+		console.log('n:', n); 
+		return n.row;
+	});
+		myChart.addSeries(null, dimple.plot.bar);
+		myChart.draw();
+		y.titleShape.style("font-size", "0px").style("font-family", "Arial")
+		.style("font-weight", "bold")
+		x.titleShape.style("font-size", "11px").style("font-family", "Arial")
+		.style("font-weight", "bold")
+		
+
+        s.shapes.each(function(d) {
+            var shape = d3.select(this);
+            svg11.append("text")
+            .attr("x", parseFloat(shape.attr("x")) + parseFloat(shape.attr("width"))/2)
+            .attr("y", y._scale(d.height))
+            .attr("dy", "-1em")
+            .style("text-anchor", "middle")
+            .style("font-size", "10px")
+            .style("font-family", "sans-serif")
+            .style("font-weight", "600")  
+            .text(d3.format(",1f")(d.yValue));
+        });     
+
+
+        });
+			
+			
+			var svg12 = dimple.newSvg("#chartContainer12", 550, 380); 
+		d3.csv("Data11.csv", function (data) { 
+		var myChart = new dimple.chart(svg12, data); 
+		myChart.defaultColors = [
+			new dimple.color("#FF7F66"),
+			new dimple.color("#FF6347"), 
+			new dimple.color("#8BB532"), 
+			new dimple.color("#5788E8"), 
+			new dimple.color("#7A9B32"), 
+]; 
+		myChart.setBounds(100, 30, 350, 305) 
+		var x = myChart.addMeasureAxis("x", "Volume"); 
+		x.overrideMin = 0;
+		x.overrideMax = 40000; 
+        x.showGridlines = false;
+		var y = myChart.addCategoryAxis("y", "Complaint"); 
+		y.addOrderRule(function(n){ 
+		console.log('n:', n); 
+		return n.row;
+	});
+      myChart.addSeries(null, dimple.plot.bar);
+      myChart.draw();
+      y.titleShape.style("font-size", "0px").style("font-family", "Arial")
+		.style("font-weight", "bold")
+		x.titleShape.style("font-size", "11px").style("font-family", "Arial")
+		.style("font-weight", "bold")
+	  
+	  
+        s.shapes.each(function(d) {
+        var shape = d3.select(this);   
+		
+			svg12.append("text")         
+			.attr("x", parseFloat(shape.attr("x")) + parseFloat(shape.attr("width"))/2)
+			.attr("y", y._scale(d.height))
+			.attr("dy", "-1em")
+            .style("text-anchor", "middle")
+            .style("font-size", "10px")
+            .style("font-family", "sans-serif")
+            .style("font-weight", "600")  
+            .text(d3.format(",1f")(d.yValue));
+        });     
+
+
+        });
+	
+	  var svg13 = dimple.newSvg("#chartContainer13", 590, 400);
+        d3.csv("Data12.csv", function (data) {
+        
+        var myChart = new dimple.chart(svg13, data);
+        myChart.setBounds(60, 30, 490, 305);
+        myChart.defaultColors = [
+			new dimple.color("#3E454C"),
+			new dimple.color("#2185C5"), 
+			new dimple.color("#FF7F66"), 
+		
+]; 
+
+        var x = myChart.addCategoryAxis("x", "Month");
+        x.addOrderRule(["May-14", "Jun-14", "Jul-14", "Aug-14", "Sep-14", "Oct-14", "Nov-14", "Dec-14", "Jan-15", "Feb-15"]);
+        var y = myChart.addMeasureAxis("y", "Percentage");
+        y.showGridlines = false;
+        y.overrideMin = 40;  
+        y.overrideMax = 100;
+        var s = myChart.addSeries("Metric", dimple.plot.line);
+        s.lineWeight = 4;
+		s.interpolation = "cardinal";
+        var myLegend = myChart.addLegend(60, 10, 500, 20, "right");
+		
+		 myLegend._getEntries = function () {
+    var orderedValues = ["Category 3", "Category 2", "Category 1"];
+    var entries = [];
+    orderedValues.forEach(function (v) {
+        entries.push(
+        {
+                key: v,
+                fill: myChart.getColor(v).fill,
+                stroke: myChart.getColor(v).stroke,
+                opacity: myChart.getColor(v).opacity,
+                series: s,
+                aggField: [v]
+            }
+        );
+    }, this);
+  
+    return entries;
+};
+
+	
+        myChart.draw();
+        myLegend.shapes.selectAll("text").style("font-size", "11px");
+        y.titleShape.style("font-size", "11px").style("font-family", "Arial")
+		.style("font-weight", "bold")
+		x.titleShape.style("font-size", "11px").style("font-family", "Arial")
+		.style("font-weight", "bold")
+
+        });
+	
+	
+	var svg14 = dimple.newSvg("#chartContainer14", 590, 400);
+      d3.csv("Data13.csv", function (data) {
+        var myChart = new dimple.chart(svg14, data);
+        myChart.setBounds(60, 30, 400, 305)
+		 myChart.defaultColors = [
+			new dimple.color("#3E454C"),
+			new dimple.color("#2185C5"), 
+		]; 
+        var x = myChart.addCategoryAxis("x", "Month");
+		
+        x.addOrderRule(["Aug-14", "Sep-14", "Oct-14", "Nov-14", "Dec-14", "Jan-15"]);
+        var y = myChart.addMeasureAxis("y", "Value");
+		y.overrideMin = 0;
+		  y.overrideMax = 3000000;
+		  
+		
+        myChart.addMeasureAxis("p", "Value");
+        var pies = myChart.addSeries("Metric", dimple.plot.pie);
+        pies.radius = 30;
+		
+		
+		
+        myChart.addLegend(100, 10, 360, 20, "right");
+		
+        myChart.draw();
+		
+      });
+	
+	
+	    </script>			
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
